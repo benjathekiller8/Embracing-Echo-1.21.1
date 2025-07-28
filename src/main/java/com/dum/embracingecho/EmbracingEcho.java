@@ -1,7 +1,13 @@
 package com.dum.embracingecho;
 
+import com.dum.embracingecho.entity.ModEntities;
+import com.dum.embracingecho.entity.client.WeeperRenderer;
 import com.dum.embracingecho.item.ModCreativeModeTabs;
 import com.dum.embracingecho.item.ModItems;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -54,6 +60,8 @@ public class EmbracingEcho {
 
         ModItems.register(modEventBus);
 
+        ModEntities.register(modEventBus);
+
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 
@@ -75,5 +83,12 @@ public class EmbracingEcho {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
 
+    }
+    @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ClientModEvents {
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event) {
+            EntityRenderers.register(ModEntities.WEEPER.get(), WeeperRenderer::new);
+        }
     }
 }

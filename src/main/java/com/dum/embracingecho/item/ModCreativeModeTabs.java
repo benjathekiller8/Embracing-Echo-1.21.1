@@ -19,6 +19,8 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.embracingecho.embracing_echo"))
                     .displayItems((itemDisplayParameters, output) -> {
                       output.accept(ModItems.ECHO_POWDER);
+
+                      output.accept(ModItems.WEEPER_SPAWN_EGG);
                     })
                     .build());
 
